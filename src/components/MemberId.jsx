@@ -8,9 +8,12 @@ function MemberId(props) {
   useEffect(() => {
     async function fetchMemberList() {
       try {
-        const response = await axios.get("http://localhost:8080/members/all", {
-          headers: { Authorization: sessionStorage.getItem("token") },
-        });
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/members/all`,
+          {
+            headers: { Authorization: sessionStorage.getItem("token") },
+          }
+        );
         setMemberList(response.data);
       } catch (error) {
         console.log(error);

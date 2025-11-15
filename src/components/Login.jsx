@@ -9,43 +9,40 @@ function Login(props) {
   const [isError, setIsError] = useState("");
   const [isSuccess, setIsSuccess] = useState("");
 
+  const BASE_URL = process.env.REACT_APP_API_URL;
+
   async function handleLogin() {
     if (username !== "" && password !== "") {
       try {
-        let response = await axios.post("http://localhost:8080/users/login", {
-          username: username,
-          password: password,
-        });
-
+        const response = await axios.post(`${BASE_URL}/users/login`, { username, password });
         if (response.status === 200) {
-          let token = response.data;
+          const token = response.data;
           sessionStorage.setItem("token", token);
           navigate("/table");
         } else {
           setIsSuccess("");
           setIsError("The username or password is wrong!");
-          navigate("/");
         }
-        setTimeout(() => {
-          setIsSuccess("");
-          setIsError("");
-        }, 3000);
       } catch (error) {
         console.error(error);
+        setIsError("Login failed. Please try again.");
+      } finally {
+        setTimeout(() => {
+          setIsError("");
+          setIsSuccess("");
+        }, 3000);
+        setUsername("");
+        setPassword("");
       }
     }
-    setUsername("");
-    setPassword("");
   }
 
   async function handleRegister() {
     if (username !== "" && password !== "") {
       const userObject = { username, password };
       try {
-        let response = await axios.post("http://localhost:8080/users/register", userObject, {
-          headers: {
-            "Content-Type": "application/json",
-          },
+        const response = await axios.post(`${BASE_URL}/users/register`, userObject, {
+          headers: { "Content-Type": "application/json" },
         });
         if (response.status === 200) {
           setIsError("");
@@ -54,16 +51,18 @@ function Login(props) {
           setIsSuccess("");
           setIsError("The username already exists! Please choose another one.");
         }
-        setTimeout(() => {
-          setIsSuccess("");
-          setIsError("");
-        }, 3000);
       } catch (error) {
         console.error(error);
+        setIsError("Registration failed. Please try again.");
+      } finally {
+        setTimeout(() => {
+          setIsError("");
+          setIsSuccess("");
+        }, 3000);
+        setUsername("");
+        setPassword("");
       }
     }
-    setUsername("");
-    setPassword("");
   }
 
   return (
@@ -74,9 +73,7 @@ function Login(props) {
         type="text"
         name="username"
         value={username}
-        onChange={(e) => {
-          setUsername(e.target.value.trim());
-        }}
+        onChange={(e) => setUsername(e.target.value.trim())}
       />
       <br />
       <label htmlFor="password">password:</label>
@@ -84,20 +81,14 @@ function Login(props) {
         type="password"
         name="password"
         value={password}
-        onChange={(e) => {
-          setPassword(e.target.value.trim());
-        }}
+        onChange={(e) => setPassword(e.target.value.trim())}
       />
       <div className="button-container">
-        <button className="button login" onClick={handleLogin}>
-          Login
-        </button>
-        <button className="button register" onClick={handleRegister}>
-          Register
-        </button>
+        <button className="button login" onClick={handleLogin}>Login</button>
+        <button className="button register" onClick={handleRegister}>Register</button>
       </div>
-      {isError ? <p className="error">{isError}</p> : null}
-      {isSuccess ? <p className="success">{isSuccess}</p> : null}
+      {isError && <p className="error">{isError}</p>}
+      {isSuccess && <p className="success">{isSuccess}</p>}
     </div>
   );
 }
