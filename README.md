@@ -54,6 +54,3 @@ The frontend of the **Library Management System** is built with **React.js**, pr
 
 Check out the live frontend here:
 [📘 Library Management System Frontend Demo](https://lms-frontend-db7zlry21-adapaka-papinaidus-projects.vercel.app/)
-
-
-If you like, I can also **add badges (like build status, license, demo) to this README** so it looks more professional on GitHub — do you want me to do that?
