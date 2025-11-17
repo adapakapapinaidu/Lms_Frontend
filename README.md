@@ -56,10 +56,10 @@ Check out the live frontend here:
 [📘 Library Management System Frontend Demo](https://lms-frontend-db7zlry21-adapaka-papinaidus-projects.vercel.app/)
 
 ### Login-Signup Page
-![Login-Signup](Login-Signup.png)
+![Login-Signup](login-signup.png)
 
 ### Book List Page
-![Book List](book-list.png)
+![Book List](Book-List.png)
 
 ### Member List Page
-![Member List](member-list.png)
+![Member List](Member-List.png)
